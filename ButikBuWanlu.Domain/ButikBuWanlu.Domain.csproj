@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Absctraction\IRepository\" />
     <Folder Include="Absctraction\IService\" />
     <Folder Include="Entities\" />
   </ItemGroup>
