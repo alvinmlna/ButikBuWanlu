@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ButikBuWanlu.Domain\ButikBuWanlu.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Seed\" />
+  </ItemGroup>
+
 </Project>
