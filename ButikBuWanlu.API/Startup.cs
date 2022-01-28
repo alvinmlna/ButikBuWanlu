@@ -1,16 +1,15 @@
+using ButikBuWanlu.DAL;
+using ButikBuWanlu.DAL.Repositories;
+using ButikBuWanlu.Domain;
+using ButikBuWanlu.Domain.Absctraction.IRepository;
+using ButikBuWanlu.Domain.Absctraction.IService;
+using ButikBuWanlu.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ButikBuWanlu.API
 {
@@ -32,6 +31,12 @@ namespace ButikBuWanlu.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ButikBuWanlu.API", Version = "v1" });
             });
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICustomersService, CustomersService>();
+            services.AddScoped<IItemsService, ItemsService>();
+            services.AddScoped<IStoresService, StoresService>();
+            services.AddScoped<ITransactionsService, TransactionsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

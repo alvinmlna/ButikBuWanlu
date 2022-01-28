@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ButikBuWanlu.Domain.Absctraction.IService;
+using ButikBuWanlu.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,23 +19,33 @@ namespace ButikBuWanlu.API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ICustomersService customersService;
+        private readonly IItemsService itemsService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            ICustomersService customersService,
+            IItemsService itemsService
+            )
         {
             _logger = logger;
+            this.customersService = customersService;
+            this.itemsService = itemsService;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public Task<List<Item>> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return itemsService.GetAllAsync();
+
+            //var rng = new Random();
+            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            //{
+            //    Date = DateTime.Now.AddDays(index),
+            //    TemperatureC = rng.Next(-20, 55),
+            //    Summary = Summaries[rng.Next(Summaries.Length)]
+            //})
+            //.ToArray();
         }
     }
 }
