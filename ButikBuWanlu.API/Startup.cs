@@ -1,7 +1,5 @@
 using ButikBuWanlu.DAL;
-using ButikBuWanlu.DAL.Repositories;
 using ButikBuWanlu.Domain;
-using ButikBuWanlu.Domain.Absctraction.IRepository;
 using ButikBuWanlu.Domain.Absctraction.IService;
 using ButikBuWanlu.Service.Services;
 using Microsoft.AspNetCore.Builder;
