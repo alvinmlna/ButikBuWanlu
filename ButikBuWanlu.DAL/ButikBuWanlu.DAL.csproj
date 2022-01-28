@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ButikBuWanlu.Domain\ButikBuWanlu.Domain.csproj" />
   </ItemGroup>
 
