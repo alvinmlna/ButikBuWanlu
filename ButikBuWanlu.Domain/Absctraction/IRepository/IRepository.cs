@@ -9,6 +9,6 @@ namespace ButikBuWanlu.Domain.Absctraction.IRepository
         Task<List<TEntity>> GetAllAsync();
 
         TEntity FindById(object id);
-        Task<TEntity> FindByIdAsync(object id);
+        ValueTask<TEntity> FindByIdAsync(object id);
     }
 }
