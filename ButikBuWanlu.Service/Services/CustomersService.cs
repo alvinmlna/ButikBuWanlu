@@ -30,9 +30,10 @@ namespace ButikBuWanlu.Service.Services
             return unitOfWork.CustomersRepository.GetAll();
         }
 
-        public Task<List<Customer>> GetAllAsync()
+        public async Task<List<Customer>> GetAllAsync()
         {
-            return unitOfWork.CustomersRepository.GetAllAsync();
+            var children = new string[] { "Store"};
+            return await unitOfWork.CustomersRepository.GetAllWithEagerLoad(children);
         }
     }
 }

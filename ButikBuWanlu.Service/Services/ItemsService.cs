@@ -31,7 +31,8 @@ namespace ButikBuWanlu.Service.Services
 
         public Task<List<Item>> GetAllAsync()
         {
-            return unitofwork.ItemsRepository.GetAllAsync();
+            throw new System.NotImplementedException();
         }
+
     }
 }

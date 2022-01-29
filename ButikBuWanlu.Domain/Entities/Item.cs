@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -15,6 +16,7 @@ namespace ButikBuWanlu.Domain.Entities
         public string Name { get; set; }
         public int Price { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

@@ -30,9 +30,10 @@ namespace ButikBuWanlu.Service.Services
             return unitOfWork.StoresRepository.GetAll();
         }
 
-        public Task<List<Store>> GetAllAsync()
+
+        Task<List<Store>> IStoresService.GetAllAsync()
         {
-            return unitOfWork.StoresRepository.GetAllAsync();
+            throw new System.NotImplementedException();
         }
     }
 }

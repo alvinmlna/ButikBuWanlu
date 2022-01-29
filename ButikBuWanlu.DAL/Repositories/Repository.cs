@@ -1,7 +1,9 @@
 ﻿using ButikBuWanlu.Domain.Absctraction.IRepository;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ButikBuWanlu.DAL.Repositories
@@ -36,9 +38,22 @@ namespace ButikBuWanlu.DAL.Repositories
             return Set.ToList();
         }
 
-        public Task<List<TEntity>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllWithEagerLoad(string[] children)
         {
-            return Set.ToListAsync();
+            try
+            {
+                IQueryable<TEntity> query = Set;
+                foreach (string entity in children)
+                {
+                    query = query.Include(entity);
+
+                }
+                return await query.ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

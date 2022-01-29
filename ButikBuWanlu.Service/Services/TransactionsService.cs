@@ -29,9 +29,9 @@ namespace ButikBuWanlu.Service.Services
             return unitOfWork.TransactionsRepository.GetAll();
         }
 
-        public Task<List<Transaction>> GetAllAsync()
+        Task<List<Transaction>> ITransactionsService.GetAllAsync()
         {
-            return unitOfWork.TransactionsRepository.GetAllAsync();
+            throw new System.NotImplementedException();
         }
     }
 }
