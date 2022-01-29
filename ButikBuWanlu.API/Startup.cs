@@ -1,6 +1,6 @@
 using ButikBuWanlu.DAL;
 using ButikBuWanlu.Domain;
-using ButikBuWanlu.Domain.Absctraction.IService;
+using ButikBuWanlu.Service.IService;
 using ButikBuWanlu.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
