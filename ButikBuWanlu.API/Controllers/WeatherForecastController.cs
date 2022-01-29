@@ -1,10 +1,8 @@
-﻿using ButikBuWanlu.Domain.Absctraction.IService;
-using ButikBuWanlu.Domain.Entities;
+﻿using ButikBuWanlu.Domain.Entities;
+using ButikBuWanlu.Service.IService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ButikBuWanlu.API.Controllers

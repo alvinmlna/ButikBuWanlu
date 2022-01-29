@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ButikBuWanlu.Domain.Absctraction.IService
+namespace ButikBuWanlu.Service.IService
 {
     public interface IStoresService
     {

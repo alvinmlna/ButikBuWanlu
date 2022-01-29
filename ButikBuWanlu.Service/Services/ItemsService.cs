@@ -1,6 +1,6 @@
 ﻿using ButikBuWanlu.Domain;
-using ButikBuWanlu.Domain.Absctraction.IService;
 using ButikBuWanlu.Domain.Entities;
+using ButikBuWanlu.Service.IService;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
