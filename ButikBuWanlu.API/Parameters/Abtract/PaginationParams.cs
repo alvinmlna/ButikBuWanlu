@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ButikBuWanlu.API.Parameters
 {
-    public class PaginationParams
+    public abstract class PaginationParams
     {
         private const int _maxItemsPerPage = 50;
         private int itemsPerPage;
@@ -15,5 +15,7 @@ namespace ButikBuWanlu.API.Parameters
             get => itemsPerPage;
             set => itemsPerPage = value > _maxItemsPerPage ? _maxItemsPerPage : value; 
         }
+
+        public string OrderBy { get; set; }
     }
 }
