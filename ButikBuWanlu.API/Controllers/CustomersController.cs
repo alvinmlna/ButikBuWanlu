@@ -17,13 +17,17 @@ namespace ButikBuWanlu.API.Controllers
     {
         private readonly ICustomersService customersService;
         private readonly IStoresService storesService;
+        private readonly ITransactionsService transactionsService;
 
         public CustomersController(
             ICustomersService customersService, 
-            IStoresService storesService)
+            IStoresService storesService,
+            ITransactionsService transactionsService
+        )
         {
             this.customersService = customersService;
             this.storesService = storesService;
+            this.transactionsService = transactionsService;
         }
 
 
@@ -92,6 +96,18 @@ namespace ButikBuWanlu.API.Controllers
                 return Ok(customers);
             }
 
+        }
+
+        [HttpGet]
+        [Route("biggestspender")]
+        public IActionResult BiggestSpender(
+            [FromQuery] string city,
+            [FromQuery] int? month,
+            [FromQuery] int? year
+        )
+        {
+            var result = customersService.BiggestSpender(city, month, year);
+            return Ok(result);
         }
     }
 }

@@ -92,6 +92,8 @@ namespace ButikBuWanlu.API.Controllers
 
                 List<dynamic> result = new List<dynamic>();
                 var stores = storesService.GetAllAsync().Result;
+
+
                 foreach (var item in stores)
                 {
                     var temp = allTransaction
