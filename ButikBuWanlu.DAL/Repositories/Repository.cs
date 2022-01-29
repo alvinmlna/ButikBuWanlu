@@ -29,16 +29,20 @@ namespace ButikBuWanlu.DAL.Repositories
         }
 
 
-        public async Task<List<TEntity>> GetAllWithEagerLoad(string[] children)
+        public async Task<List<TEntity>> GetAllWithEagerLoad(string[] children = null)
         {
             try
             {
                 IQueryable<TEntity> query = Set;
-                foreach (string entity in children)
+                if (children != null)
                 {
-                    query = query.Include(entity);
+                    foreach (string entity in children)
+                    {
+                        query = query.Include(entity);
 
+                    }
                 }
+
                 return await query.ToListAsync();
             }
             catch

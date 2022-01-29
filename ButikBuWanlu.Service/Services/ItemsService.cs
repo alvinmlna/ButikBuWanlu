@@ -19,9 +19,9 @@ namespace ButikBuWanlu.Service.Services
             return unitofwork.ItemsRepository.FindByIdAsync(id);
         }
 
-        public Task<List<Item>> GetAllAsync()
+        public async Task<List<Item>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await unitofwork.ItemsRepository.GetAllWithEagerLoad();
         }
 
     }

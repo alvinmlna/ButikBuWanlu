@@ -7,7 +7,7 @@ namespace ButikBuWanlu.Domain.Absctraction.IRepository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<List<TEntity>> GetAllWithEagerLoad(string[] children);
+        Task<List<TEntity>> GetAllWithEagerLoad(string[] children = null);
         ValueTask<TEntity> FindByIdAsync(object id);
     }
 }
