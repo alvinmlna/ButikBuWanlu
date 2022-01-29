@@ -23,20 +23,11 @@ namespace ButikBuWanlu.DAL.Repositories
             get { return set ?? ( set = context.Set<TEntity>()); }
         }
 
-        public TEntity FindById(object id)
-        {
-            return Set.Find(id);
-        }
-
         public ValueTask<TEntity> FindByIdAsync(object id)
         {
             return Set.FindAsync(id);
         }
 
-        public List<TEntity> GetAll()
-        {
-            return Set.ToList();
-        }
 
         public async Task<List<TEntity>> GetAllWithEagerLoad(string[] children)
         {

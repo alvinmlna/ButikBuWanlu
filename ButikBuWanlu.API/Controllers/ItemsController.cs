@@ -32,7 +32,7 @@ namespace ButikBuWanlu.API.Controllers
             if (!checkOrder)
                 return BadRequest("invalid sort parameter");
 
-            var items = itemsService.GetAll().AsQueryable()
+            var items = itemsService.GetAllAsync().Result.AsQueryable()
                         .OrderBy(@params.OrderBy)
                         .Skip((@params.Page - 1) * @params.ItemsPerPage)
                         .Take(@params.ItemsPerPage);

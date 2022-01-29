@@ -14,19 +14,9 @@ namespace ButikBuWanlu.Service.Services
             this.unitofwork = unitofwork;
         }
 
-        public Item FindById(int id)
-        {
-            return unitofwork.ItemsRepository.FindById(id);
-        }
-
         public ValueTask<Item> FindByIdAsync(int id)
         {
             return unitofwork.ItemsRepository.FindByIdAsync(id);
-        }
-
-        public IEnumerable<Item> GetAll()
-        {
-            return unitofwork.ItemsRepository.GetAll();
         }
 
         public Task<List<Item>> GetAllAsync()

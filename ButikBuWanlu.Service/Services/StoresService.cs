@@ -15,21 +15,10 @@ namespace ButikBuWanlu.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public Store FindById(int id)
-        {
-            return unitOfWork.StoresRepository.FindById(id);
-        }
-
         public ValueTask<Store> FindByIdAsync(int id)
         {
             return unitOfWork.StoresRepository.FindByIdAsync(id);
         }
-
-        public IEnumerable<Store> GetAll()
-        {
-            return unitOfWork.StoresRepository.GetAll();
-        }
-
 
         Task<List<Store>> IStoresService.GetAllAsync()
         {

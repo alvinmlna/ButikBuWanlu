@@ -14,19 +14,10 @@ namespace ButikBuWanlu.Service.Services
         {
             this.unitOfWork = unitOfWork;
         }
-        public Transaction FindById(int id)
-        {
-            return unitOfWork.TransactionsRepository.FindById(id);
-        }
 
         public ValueTask<Transaction> FindByIdAsync(int id)
         {
             return unitOfWork.TransactionsRepository.FindByIdAsync(id);
-        }
-
-        public IEnumerable<Transaction> GetAll()
-        {
-            return unitOfWork.TransactionsRepository.GetAll();
         }
 
         Task<List<Transaction>> ITransactionsService.GetAllAsync()
