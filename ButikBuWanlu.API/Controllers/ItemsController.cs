@@ -7,8 +7,6 @@ using System.Linq.Dynamic.Core;
 using System.Linq;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.API.Helpers;
-using System.Collections.Generic;
-using ButikBuWanlu.API.DTO;
 
 namespace ButikBuWanlu.API.Controllers
 {
@@ -17,18 +15,12 @@ namespace ButikBuWanlu.API.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly IItemsService itemsService;
-        private readonly ITransactionsService transactionsService;
-        private readonly IStoresService storesService;
 
         public ItemsController(
-            IItemsService itemsService,
-            ITransactionsService transactionsService,
-            IStoresService storesService
+            IItemsService itemsService
         )
         {
             this.itemsService = itemsService;
-            this.transactionsService = transactionsService;
-            this.storesService = storesService;
         }
 
 
@@ -61,59 +53,8 @@ namespace ButikBuWanlu.API.Controllers
             [FromQuery] int? year
         )
         {
-            if (city != null)
-            {
-                var allTransaction = transactionsService.GetAllAsync().Result
-                                        .Where(x => x.Store.City == city);
-
-                if (month != null && year != null)
-                    allTransaction = allTransaction.Where(x => x.DateTransaction.Month == month && x.DateTransaction.Year == year);
-
-                var result = allTransaction
-                            .GroupBy(x => x.ItemId)
-                            .Select(n => new PopularItemsDTO
-                            {
-                                ItemId = n.Key,
-                                ItemName = n.First().Item.Name,
-                                City = n.First().Store.City,
-                                CountOfTransactions = n.Count()
-                            })
-                            .OrderByDescending(x => x.CountOfTransactions)
-                            .Take(10);
-
-                return Ok(result);
-            } else
-            {
-                //popular item in all city
-                IEnumerable<Transaction> allTransaction = transactionsService.GetAllAsync().Result;
-
-                if (month != null && year != null)
-                    allTransaction = allTransaction.Where(x => x.DateTransaction.Month == month && x.DateTransaction.Year == year);
-
-                List<dynamic> result = new List<dynamic>();
-                var stores = storesService.GetAllAsync().Result;
-
-
-                foreach (var item in stores)
-                {
-                    var temp = allTransaction
-                                .Where(x => x.Store.City == item.City)
-                                .GroupBy(x => x.ItemId)
-                                .Select(n => new PopularItemsDTO
-                                {
-                                    ItemId = n.Key,
-                                    ItemName = n.First().Item.Name,
-                                    City = n.First().Store.City,
-                                    CountOfTransactions = n.Count()
-                                })
-                                .OrderByDescending(x => x.CountOfTransactions)
-                                .Take(10);
-
-                    result.Add(temp);
-                }
-
-                return Ok(result);
-            }
+            var result = itemsService.PopularItems(city, month, year);
+            return Ok(result);
         }
     }
 }

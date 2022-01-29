@@ -1,4 +1,5 @@
 ﻿using ButikBuWanlu.Domain.Entities;
+using ButikBuWanlu.Service.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,5 +9,7 @@ namespace ButikBuWanlu.Service.IService
     {
         ValueTask<Item> FindByIdAsync(int id);
         Task<List<Item>> GetAllAsync();
+
+        IEnumerable<PopularItemsDTO> PopularItems(string city, int? month, int? year);
     }
 }
