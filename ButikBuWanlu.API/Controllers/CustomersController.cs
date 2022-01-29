@@ -28,12 +28,21 @@ namespace ButikBuWanlu.API.Controllers
         )
         {
             //sorting validation
-            var checkOrder = AttributeHelper.CheckAttribute<Customer>(@params.OrderBy);
+            var checkOrder = AttributeHelper.CheckOrder<Customer>(@params.OrderBy);
             if (!checkOrder)
                 return BadRequest("invalid sort parameter");
 
-            var items = customersService.GetAll().AsQueryable()
-                        .OrderBy(@params.OrderBy)
+
+            var items = customersService.GetAll().AsQueryable();
+
+            ////where validation
+            if (string.IsNullOrEmpty(@params.Where) == false)
+            {
+                DynamicExpressionParser.ParseLambda<Customer, bool>(new ParsingConfig(), true, @params.Where);
+                items = items.Where(@params.Where);
+            };
+
+            items = items.OrderBy(@params.OrderBy)
                         .Skip((@params.Page - 1) * @params.ItemsPerPage)
                         .Take(@params.ItemsPerPage);
 

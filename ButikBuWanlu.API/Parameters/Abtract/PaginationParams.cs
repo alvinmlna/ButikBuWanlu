@@ -17,5 +17,6 @@ namespace ButikBuWanlu.API.Parameters
         }
 
         public string OrderBy { get; set; }
+        public string Where { get; set; }
     }
 }

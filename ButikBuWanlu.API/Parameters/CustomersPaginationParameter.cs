@@ -10,6 +10,7 @@ namespace ButikBuWanlu.API.Parameters
         public CustomersPaginationParameter()
         {
             OrderBy = "Id";
+            Where = "";
         }
     }
 }

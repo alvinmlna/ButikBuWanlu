@@ -28,7 +28,7 @@ namespace ButikBuWanlu.API.Controllers
         )
         {
             //sorting validation
-            var checkOrder = AttributeHelper.CheckAttribute<Item>(@params.OrderBy);
+            var checkOrder = AttributeHelper.CheckOrder<Item>(@params.OrderBy);
             if (!checkOrder)
                 return BadRequest("invalid sort parameter");
 
