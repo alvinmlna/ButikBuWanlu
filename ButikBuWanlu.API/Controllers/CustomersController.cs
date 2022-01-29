@@ -16,10 +16,14 @@ namespace ButikBuWanlu.API.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomersService customersService;
+        private readonly IStoresService storesService;
 
-        public CustomersController(ICustomersService customersService)
+        public CustomersController(
+            ICustomersService customersService, 
+            IStoresService storesService)
         {
             this.customersService = customersService;
+            this.storesService = storesService;
         }
 
 
@@ -56,20 +60,38 @@ namespace ButikBuWanlu.API.Controllers
         [HttpGet]
         [Route("specialcustomer")]
         public IActionResult GetFirstAndLastCustomer(
-            [FromQuery] string city
+            [FromQuery] string city 
         )
         {
             List<Customer> customers = new List<Customer>();
 
             var allresult = customersService.GetAllAsync().Result.AsQueryable();
 
-            var firstCustomer = allresult.Where(x => x.Store.City == city).OrderBy(x => x.DateRegister).FirstOrDefault();
-            var lastCustomer = allresult.Where(x => x.Store.City == city).OrderByDescending(x => x.DateRegister).FirstOrDefault();
+            if (city != null)
+            {
+                var firstCustomer = allresult.Where(x => x.Store.City == city).OrderBy(x => x.DateRegister).FirstOrDefault();
+                customers.Add(firstCustomer);
 
-            customers.Add(firstCustomer);
-            customers.Add(lastCustomer);
+                var lastCustomer = allresult.Where(x => x.Store.City == city).OrderByDescending(x => x.DateRegister).FirstOrDefault();
+                customers.Add(lastCustomer);
 
-            return Ok(customers);
+                return Ok(customers);
+            } else
+            {
+                var allCity = storesService.GetAllAsync().Result;
+
+                foreach (var item in allCity)
+                {
+                    var firstCustomer = allresult.Where(x => x.Store.City == item.City).OrderBy(x => x.DateRegister).FirstOrDefault();
+                    customers.Add(firstCustomer);
+
+                    var lastCustomer = allresult.Where(x => x.Store.City == item.City).OrderByDescending(x => x.DateRegister).FirstOrDefault();
+                    customers.Add(lastCustomer);
+                }
+
+                return Ok(customers);
+            }
+
         }
     }
 }

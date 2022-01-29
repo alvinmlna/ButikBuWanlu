@@ -22,7 +22,7 @@ namespace ButikBuWanlu.Service.Services
 
         Task<List<Store>> IStoresService.GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return unitOfWork.StoresRepository.GetAllWithEagerLoad();
         }
     }
 }
