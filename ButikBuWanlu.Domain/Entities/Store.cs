@@ -15,6 +15,7 @@ namespace ButikBuWanlu.Domain.Entities
         public string Name { get; set; }
         public string City { get; set; }
 
+        public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

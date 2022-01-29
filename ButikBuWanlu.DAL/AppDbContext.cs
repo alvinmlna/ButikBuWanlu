@@ -41,6 +41,12 @@ namespace ButikBuWanlu.DAL
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.Customers)
+                    .HasForeignKey(d => d.StoreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Customers_Stores");
             });
 
             modelBuilder.Entity<Item>(entity =>
