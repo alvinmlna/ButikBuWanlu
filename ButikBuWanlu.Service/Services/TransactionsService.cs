@@ -22,7 +22,8 @@ namespace ButikBuWanlu.Service.Services
 
         Task<List<Transaction>> ITransactionsService.GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            var children = new string[] { "Store", "Item", "Customer" };
+            return unitOfWork.TransactionsRepository.GetAllWithEagerLoad(children);
         }
     }
 }
