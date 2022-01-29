@@ -8,6 +8,7 @@ using System.Linq;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.API.Helpers;
 using System.Collections.Generic;
+using ButikBuWanlu.API.DTO;
 
 namespace ButikBuWanlu.API.Controllers
 {
@@ -70,14 +71,14 @@ namespace ButikBuWanlu.API.Controllers
 
                 var result = allTransaction
                             .GroupBy(x => x.ItemId)
-                            .Select(n => new
+                            .Select(n => new PopularItemsDTO
                             {
                                 ItemId = n.Key,
-                                Name = n.First().Item.Name,
+                                ItemName = n.First().Item.Name,
                                 City = n.First().Store.City,
-                                CountOfTransaction = n.Count()
+                                CountOfTransactions = n.Count()
                             })
-                            .OrderByDescending(x => x.CountOfTransaction)
+                            .OrderByDescending(x => x.CountOfTransactions)
                             .Take(10);
 
                 return Ok(result);
@@ -96,14 +97,14 @@ namespace ButikBuWanlu.API.Controllers
                     var temp = allTransaction
                                 .Where(x => x.Store.City == item.City)
                                 .GroupBy(x => x.ItemId)
-                                .Select(n => new
+                                .Select(n => new PopularItemsDTO
                                 {
                                     ItemId = n.Key,
-                                    Name = n.First().Item.Name,
+                                    ItemName = n.First().Item.Name,
                                     City = n.First().Store.City,
-                                    CountOfTransaction = n.Count()
+                                    CountOfTransactions = n.Count()
                                 })
-                                .OrderByDescending(x => x.CountOfTransaction)
+                                .OrderByDescending(x => x.CountOfTransactions)
                                 .Take(10);
 
                     result.Add(temp);
