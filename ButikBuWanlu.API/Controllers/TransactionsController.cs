@@ -27,54 +27,11 @@ namespace ButikBuWanlu.API.Controllers
             [FromQuery] int? year
         )
         {
-            IEnumerable<Transaction> allTransaction = transactionsService.GetAllAsync().Result;
-
             if (year == null)
                 year = DateTime.Now.Year;
 
-            allTransaction = allTransaction.Where(x => x.DateTransaction.Year == year);
-
-            if (city != null)
-            {
-                allTransaction = allTransaction.Where(x => x.Store.City == city); 
-
-                var result = allTransaction
-                    .GroupBy(x => x.StoreId)
-                    .Select(n => new
-                    {
-                        StoreId = n.Key,
-                        City = n.First().Store.City,
-                        TotalPurchased = n.Sum(x => x.TotalPrice)
-                    })
-                    .OrderByDescending(x => x.TotalPurchased);
-
-                return Ok(result);
-            } else
-            {
-                var stores = storesService.GetAllAsync().Result;
-
-                List<dynamic> result = new List<dynamic>();
-
-                foreach (var item in stores)
-                {
-                    var temp = allTransaction
-                            .Where(x => x.Store.City == item.City)
-                            .GroupBy(x => x.StoreId)
-                            .Select(n => new
-                            {
-                                StoreId = n.Key,
-                                City = n.First().Store.City,
-                                TotalPurchased = n.Sum(x => x.TotalPrice)
-                            })
-                            .OrderByDescending(x => x.TotalPurchased);
-
-                    result.Add(temp);
-                }
-
-                return Ok(result);
-            }
-
-
+            var result = transactionsService.SummaryTransactions(city, year);
+            return Ok(result);
         }
     }
 }
