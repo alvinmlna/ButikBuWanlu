@@ -4,6 +4,7 @@ using ButikBuWanlu.API.Parameters;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.IService;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text.Json;
@@ -49,6 +50,26 @@ namespace ButikBuWanlu.API.Controllers
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
             return Ok(items);
+        }
+
+
+        [HttpGet]
+        [Route("specialcustomer")]
+        public IActionResult GetFirstAndLastCustomer(
+            [FromQuery] string city
+        )
+        {
+            List<Customer> customers = new List<Customer>();
+
+            var allresult = customersService.GetAllAsync().Result.AsQueryable();
+
+            var firstCustomer = allresult.Where(x => x.Store.City == city).OrderBy(x => x.DateRegister).FirstOrDefault();
+            var lastCustomer = allresult.Where(x => x.Store.City == city).OrderByDescending(x => x.DateRegister).FirstOrDefault();
+
+            customers.Add(firstCustomer);
+            customers.Add(lastCustomer);
+
+            return Ok(customers);
         }
     }
 }
