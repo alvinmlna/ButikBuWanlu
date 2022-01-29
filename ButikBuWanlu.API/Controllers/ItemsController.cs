@@ -17,14 +17,17 @@ namespace ButikBuWanlu.API.Controllers
     {
         private readonly IItemsService itemsService;
         private readonly ITransactionsService transactionsService;
+        private readonly IStoresService storesService;
 
         public ItemsController(
             IItemsService itemsService,
-            ITransactionsService transactionsService
+            ITransactionsService transactionsService,
+            IStoresService storesService
         )
         {
             this.itemsService = itemsService;
             this.transactionsService = transactionsService;
+            this.storesService = storesService;
         }
 
 
@@ -62,36 +65,52 @@ namespace ButikBuWanlu.API.Controllers
                 var allTransaction = transactionsService.GetAllAsync().Result
                                         .Where(x => x.Store.City == city);
 
-                return Ok(PopularItemExt(allTransaction, month, year));
+                if (month != null && year != null)
+                    allTransaction = allTransaction.Where(x => x.DateTransaction.Month == month && x.DateTransaction.Year == year);
+
+                var result = allTransaction
+                            .GroupBy(x => x.ItemId)
+                            .Select(n => new
+                            {
+                                ItemId = n.Key,
+                                Name = n.First().Item.Name,
+                                City = n.First().Store.City,
+                                CountOfTransaction = n.Count()
+                            })
+                            .OrderByDescending(x => x.CountOfTransaction)
+                            .Take(10);
+
+                return Ok(result);
             } else
             {
                 //popular item in all city
+                IEnumerable<Transaction> allTransaction = transactionsService.GetAllAsync().Result;
 
-                var allTransaction = transactionsService.GetAllAsync().Result;
-                return Ok(PopularItemExt(allTransaction, month, year));
+                if (month != null && year != null)
+                    allTransaction = allTransaction.Where(x => x.DateTransaction.Month == month && x.DateTransaction.Year == year);
 
+                List<dynamic> result = new List<dynamic>();
+                var stores = storesService.GetAllAsync().Result;
+                foreach (var item in stores)
+                {
+                    var temp = allTransaction
+                                .Where(x => x.Store.City == item.City)
+                                .GroupBy(x => x.ItemId)
+                                .Select(n => new
+                                {
+                                    ItemId = n.Key,
+                                    Name = n.First().Item.Name,
+                                    City = n.First().Store.City,
+                                    CountOfTransaction = n.Count()
+                                })
+                                .OrderByDescending(x => x.CountOfTransaction)
+                                .Take(10);
+
+                    result.Add(temp);
+                }
+
+                return Ok(result);
             }
-
         }
-
-        private dynamic PopularItemExt(IEnumerable<Transaction> item, int? month, int? year)
-        {
-            if (month != null && year != null)
-                item = item.Where(x => x.DateTransaction.Month == month && x.DateTransaction.Year == year);
-
-                return  item
-                        .GroupBy(x => x.ItemId)
-                        .Select(n => new
-                        {
-                            ItemId = n.Key,
-                            Name = n.First().Item.Name,
-                            City = n.First().Store.City,
-                            CountOfTransaction = n.Count()
-                        })
-                        .OrderByDescending(x => x.CountOfTransaction)
-                        .Take(10);
-    }
-        
-
     }
 }
