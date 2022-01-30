@@ -1,9 +1,6 @@
-﻿using ButikBuWanlu.Domain.Entities;
-using ButikBuWanlu.Service.IService;
+﻿using ButikBuWanlu.Service.IService;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ButikBuWanlu.API.Controllers
 {
@@ -12,12 +9,10 @@ namespace ButikBuWanlu.API.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly ITransactionsService transactionsService;
-        private readonly IStoresService storesService;
 
-        public TransactionsController(ITransactionsService transactionsService, IStoresService storesService)
+        public TransactionsController(ITransactionsService transactionsService)
         {
             this.transactionsService = transactionsService;
-            this.storesService = storesService;
         }
 
         [HttpGet]

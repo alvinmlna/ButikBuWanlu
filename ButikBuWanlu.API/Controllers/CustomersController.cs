@@ -4,7 +4,6 @@ using ButikBuWanlu.API.Parameters;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.IService;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text.Json;
@@ -16,18 +15,12 @@ namespace ButikBuWanlu.API.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomersService customersService;
-        private readonly IStoresService storesService;
-        private readonly ITransactionsService transactionsService;
 
         public CustomersController(
-            ICustomersService customersService, 
-            IStoresService storesService,
-            ITransactionsService transactionsService
+            ICustomersService customersService
         )
         {
             this.customersService = customersService;
-            this.storesService = storesService;
-            this.transactionsService = transactionsService;
         }
 
 
