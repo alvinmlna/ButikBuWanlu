@@ -100,9 +100,6 @@ namespace ButikBuWanlu.Service.Services
         {
             IEnumerable<TrendingItemsDTO> allitems = unitofwork.TransactionsRepository.TrendingItems();
 
-            if (string.IsNullOrEmpty(city) == false)
-                allitems = allitems.Where(x => x.City == city);
-
             if (month == null)
                 month = DateTime.Now.Month;
 
@@ -111,12 +108,20 @@ namespace ButikBuWanlu.Service.Services
 
             DateTime now = new DateTime(year.Value, month.Value, 1);
             DateTime temp = now.AddMonths(-1);
-            DateTime prevMonth = new DateTime(temp.Year, temp.Month, DateTime.DaysInMonth(temp.Year, temp.Month));
+            DateTime prevMonth = new DateTime(temp.Year, temp.Month, 1);
 
             allitems = allitems
                 .Where(x => (x.Month == month && x.Year == year) || (x.Month == prevMonth.Month && x.Year == prevMonth.Year));
 
-            return allitems.OrderByDescending(x => x.SummarySales).Take(5).ToList();
+            var result = allitems.OrderByDescending(x => x.SummarySales).Take(5).ToList();
+
+            //not good practice
+            foreach (var item in result)
+            {
+                item.ItemName = unitofwork.ItemsRepository.FindByIdAsync(item.ItemId).Result?.Name;
+            }
+
+            return result;
         }
     }
 }
