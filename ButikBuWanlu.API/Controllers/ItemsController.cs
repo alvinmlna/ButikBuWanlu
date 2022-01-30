@@ -27,20 +27,21 @@ namespace ButikBuWanlu.API.Controllers
         [HttpGet]
         public IActionResult Get(
             [FromQuery] ItemsPaginationParameter @params
-        )
-        {
+        ){
             //sorting validation
             var checkOrder = AttributeHelper.CheckOrder<Item>(@params.OrderBy);
             if (!checkOrder)
                 return BadRequest("invalid sort parameter");
 
-            var items = itemsService.GetAllAsync().Result.AsQueryable()
-                        .OrderBy(@params.OrderBy)
-                        .Skip((@params.Page - 1) * @params.ItemsPerPage)
-                        .Take(@params.ItemsPerPage);
+            var items = itemsService.GetAllAsync().Result.AsQueryable();
 
             var paginationMetadata = new PaginationMetadata(items.Count(), @params.Page, @params.ItemsPerPage);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
+
+            items = items
+                    .OrderBy(@params.OrderBy)
+                    .Skip((@params.Page - 1) * @params.ItemsPerPage)
+                    .Take(@params.ItemsPerPage);
 
             return Ok(items);
         }

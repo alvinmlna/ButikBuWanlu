@@ -50,12 +50,13 @@ namespace ButikBuWanlu.API.Controllers
                 items = items.Where(@params.Where);
             };
 
-            items = items.OrderBy(@params.OrderBy)
-                        .Skip((@params.Page - 1) * @params.ItemsPerPage)
-                        .Take(@params.ItemsPerPage);
 
             var paginationMetadata = new PaginationMetadata(items.Count(), @params.Page, @params.ItemsPerPage);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
+
+            items = items.OrderBy(@params.OrderBy)
+                        .Skip((@params.Page - 1) * @params.ItemsPerPage)
+                        .Take(@params.ItemsPerPage);
 
             return Ok(items);
         }
