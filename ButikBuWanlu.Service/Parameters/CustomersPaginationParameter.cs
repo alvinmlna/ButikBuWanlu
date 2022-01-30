@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ButikBuWanlu.API.Parameters
+﻿namespace ButikBuWanlu.Service.Parameters
 {
     public class CustomersPaginationParameter : PaginationParams
     {

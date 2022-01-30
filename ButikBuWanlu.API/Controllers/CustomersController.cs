@@ -1,8 +1,8 @@
 ﻿using ButikBuWanlu.API.Helpers;
 using ButikBuWanlu.API.Metadatas;
-using ButikBuWanlu.API.Parameters;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.IService;
+using ButikBuWanlu.Service.Parameters;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Linq.Dynamic.Core;

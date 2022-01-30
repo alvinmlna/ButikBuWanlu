@@ -1,5 +1,4 @@
 ﻿using ButikBuWanlu.API.Metadatas;
-using ButikBuWanlu.API.Parameters;
 using ButikBuWanlu.Service.IService;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -7,6 +6,7 @@ using System.Linq.Dynamic.Core;
 using System.Linq;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.API.Helpers;
+using ButikBuWanlu.Service.Parameters;
 
 namespace ButikBuWanlu.API.Controllers
 {
