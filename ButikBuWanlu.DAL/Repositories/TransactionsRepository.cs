@@ -3,6 +3,7 @@ using ButikBuWanlu.Domain.DTO;
 using ButikBuWanlu.Domain.Entities;
 using LinqToDB;
 using LinqToDB.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,13 +15,18 @@ namespace ButikBuWanlu.DAL.Repositories
         {
         }
 
-        public List<TrendingItemsDTO> TrendingItems()
+        public List<TrendingItemsDTO> TrendingItems(string city)
         {
             //readmore about lag
             //https://www.sqlshack.com/sql-lag-function-overview-and-examples/
             //using linqtodb plugin
 
-            IQueryable<TrendingItemsDTO> result = Set
+            IQueryable<Transaction> query = Set.Include(x => x.Store);
+
+            if (string.IsNullOrEmpty(city) == false)
+                query = query.Where(x => x.Store.City == city);
+
+            IQueryable<TrendingItemsDTO> result = query
                         .GroupBy(x => new { x.DateTransaction.Year, x.DateTransaction.Month, x.ItemId })
                         .Select(n => new TrendingItemsDTO
                         {

@@ -6,6 +6,6 @@ namespace ButikBuWanlu.Domain.Absctraction.IRepository
 {
     public interface ITransactionsRepository : IRepository<Transaction>
     {
-        List<TrendingItemsDTO> TrendingItems();
+        List<TrendingItemsDTO> TrendingItems(string city);
     }
 }

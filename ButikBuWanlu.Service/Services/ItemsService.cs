@@ -98,7 +98,7 @@ namespace ButikBuWanlu.Service.Services
 
         public IEnumerable<TrendingItemsDTO> TrendingItems(string city, int? month, int? year)
         {
-            IEnumerable<TrendingItemsDTO> allitems = unitofwork.TransactionsRepository.TrendingItems();
+            IEnumerable<TrendingItemsDTO> allitems = unitofwork.TransactionsRepository.TrendingItems(city);
 
             if (month == null)
                 month = DateTime.Now.Month;
