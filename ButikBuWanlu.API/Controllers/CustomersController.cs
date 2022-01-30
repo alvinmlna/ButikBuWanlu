@@ -34,22 +34,16 @@ namespace ButikBuWanlu.API.Controllers
             if (!checkOrder)
                 return BadRequest("invalid sort parameter");
 
-            var items = customersService.GetAllAsync().Result.AsQueryable();
+            var items = customersService.GetAllAsync(@params);
 
             ////where validation
             if (string.IsNullOrEmpty(@params.Where) == false)
                 DynamicExpressionParser.ParseLambda<Customer, bool>(new ParsingConfig(), true, @params.Where);
-                items = items.Where(@params.Where);
-
-
-            var paginationMetadata = new PaginationMetadata(items.Count(), @params.Page, @params.ItemsPerPage);
+                
+            var paginationMetadata = new PaginationMetadata(items.AllRecords, @params.Page, @params.ItemsPerPage);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
-            items = items.OrderBy(@params.OrderBy)
-                        .Skip((@params.Page - 1) * @params.ItemsPerPage)
-                        .Take(@params.ItemsPerPage);
-
-            return Ok(items);
+            return Ok(items.ListData);
         }
 
 

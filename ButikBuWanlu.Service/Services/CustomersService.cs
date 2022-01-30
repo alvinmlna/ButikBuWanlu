@@ -1,9 +1,13 @@
 ﻿using ButikBuWanlu.Domain;
 using ButikBuWanlu.Domain.DTO;
+using ButikBuWanlu.Domain.DTO.Main;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.IService;
+using ButikBuWanlu.Service.Parameters;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace ButikBuWanlu.Service.Services
@@ -123,6 +127,31 @@ namespace ButikBuWanlu.Service.Services
 
                 return customers;
             }
+        }
+
+        public CustomersDTO GetAllAsync(CustomersPaginationParameter @params)
+        {
+            IQueryable<Customer> customers = GetAllAsync().Result.AsQueryable();
+
+            CustomersDTO result = new CustomersDTO();
+            result.AllRecords = customers.Count();
+
+            if (string.IsNullOrEmpty(@params.Where) == false)
+                customers = customers.Where(@params.Where);
+
+            customers = customers.OrderBy(@params.OrderBy)
+                        .Skip((@params.Page - 1) * @params.ItemsPerPage)
+                        .Take(@params.ItemsPerPage);
+
+            result.ListData = customers
+                                .Select(x => new _CustomersDTO { 
+                                   Id = x.Id,
+                                   DateRegister = x.DateRegister,
+                                   Name = x.Name,
+                                   StoreId = x.StoreId,
+                                   Store = x.Store
+                                }).ToList();
+            return result;
         }
     }
 }
