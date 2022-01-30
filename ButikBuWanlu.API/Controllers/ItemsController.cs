@@ -56,5 +56,18 @@ namespace ButikBuWanlu.API.Controllers
             var result = itemsService.PopularItems(city, month, year);
             return Ok(result);
         }
+
+
+        [HttpGet]
+        [Route("trending")]
+        public IActionResult TrendingItems(
+            [FromQuery] string city,
+            [FromQuery] int? month,
+            [FromQuery] int? year
+        )
+        {
+            var result = itemsService.TrendingItems(city, month, year);
+            return Ok(result);
+        }
     }
 }

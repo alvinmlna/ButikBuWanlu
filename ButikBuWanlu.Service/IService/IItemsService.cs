@@ -11,5 +11,6 @@ namespace ButikBuWanlu.Service.IService
         Task<List<Item>> GetAllAsync();
 
         IEnumerable<PopularItemsDTO> PopularItems(string city, int? month, int? year);
+        IEnumerable<dynamic> TrendingItems(string city, int? month, int? year);
     }
 }

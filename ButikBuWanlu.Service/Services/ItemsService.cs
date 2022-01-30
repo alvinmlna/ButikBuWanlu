@@ -2,6 +2,8 @@
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.DTO;
 using ButikBuWanlu.Service.IService;
+using LinqToDB;
+using LinqToDB.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -90,6 +92,12 @@ namespace ButikBuWanlu.Service.Services
 
                 return result;
             }
+        }
+
+        public IEnumerable<dynamic> TrendingItems(string city, int? month, int? year)
+        {
+            var x = unitofwork.TransactionsRepository.TrendingItems();
+            return x;
         }
     }
 }
