@@ -4,7 +4,6 @@ using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.IService;
 using ButikBuWanlu.Service.Parameters;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text.Json;
 
@@ -34,11 +33,11 @@ namespace ButikBuWanlu.API.Controllers
             if (!checkOrder)
                 return BadRequest("invalid sort parameter");
 
-            var items = customersService.GetAllAsync(@params);
-
             ////where validation
             if (string.IsNullOrEmpty(@params.Where) == false)
                 DynamicExpressionParser.ParseLambda<Customer, bool>(new ParsingConfig(), true, @params.Where);
+
+            var items = customersService.GetAllAsync(@params);
                 
             var paginationMetadata = new PaginationMetadata(items.AllRecords, @params.Page, @params.ItemsPerPage);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));

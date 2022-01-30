@@ -1,11 +1,14 @@
 ﻿using ButikBuWanlu.Domain;
 using ButikBuWanlu.Domain.DTO;
+using ButikBuWanlu.Domain.DTO.Main;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.IService;
+using ButikBuWanlu.Service.Parameters;
 using LinqToDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace ButikBuWanlu.Service.Services
@@ -35,6 +38,7 @@ namespace ButikBuWanlu.Service.Services
         {
             return await unitofwork.ItemsRepository.GetAllWithEagerLoad();
         }
+
 
         public IEnumerable<PopularItemsDTO> PopularItems(string city, int? month, int? year)
         {
@@ -121,5 +125,30 @@ namespace ButikBuWanlu.Service.Services
 
             return result;
         }
+
+        public ItemsDTO GetAllAsync(ItemsPaginationParameter @params)
+        {
+            IQueryable<Item> items = GetAllAsync().Result.AsQueryable();
+
+            ItemsDTO result = new ItemsDTO();
+            result.AllRecords = items.Count();
+
+            if (string.IsNullOrEmpty(@params.Where) == false)
+                items = items.Where(@params.Where);
+
+            items = items.OrderBy(@params.OrderBy)
+                        .Skip((@params.Page - 1) * @params.ItemsPerPage)
+                        .Take(@params.ItemsPerPage);
+
+            result.ListData = items
+                                .Select(x => new _ItemsDTO
+                                {
+                                    Id = x.Id,
+                                    Name = x.Name,
+                                    Price = x.Price
+                                }).ToList();
+            return result;
+        }
+
     }
 }

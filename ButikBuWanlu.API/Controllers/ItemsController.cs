@@ -2,11 +2,10 @@
 using ButikBuWanlu.Service.IService;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using System.Linq.Dynamic.Core;
-using System.Linq;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.API.Helpers;
 using ButikBuWanlu.Service.Parameters;
+using System.Linq.Dynamic.Core;
 
 namespace ButikBuWanlu.API.Controllers
 {
@@ -33,17 +32,17 @@ namespace ButikBuWanlu.API.Controllers
             if (!checkOrder)
                 return BadRequest("invalid sort parameter");
 
-            var items = itemsService.GetAllAsync().Result.AsQueryable();
+            ////where validation
+            if (string.IsNullOrEmpty(@params.Where) == false)
+                DynamicExpressionParser.ParseLambda<Customer, bool>(new ParsingConfig(), true, @params.Where);
 
-            var paginationMetadata = new PaginationMetadata(items.Count(), @params.Page, @params.ItemsPerPage);
+            var items = itemsService.GetAllAsync(@params);
+
+            var paginationMetadata = new PaginationMetadata(items.AllRecords, @params.Page, @params.ItemsPerPage);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
-            items = items
-                    .OrderBy(@params.OrderBy)
-                    .Skip((@params.Page - 1) * @params.ItemsPerPage)
-                    .Take(@params.ItemsPerPage);
 
-            return Ok(items);
+            return Ok(items.ListData);
         }
 
         [HttpGet]
