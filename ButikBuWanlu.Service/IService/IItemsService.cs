@@ -1,4 +1,5 @@
-﻿using ButikBuWanlu.Domain.Entities;
+﻿using ButikBuWanlu.Domain.DTO;
+using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,6 +12,6 @@ namespace ButikBuWanlu.Service.IService
         Task<List<Item>> GetAllAsync();
 
         IEnumerable<PopularItemsDTO> PopularItems(string city, int? month, int? year);
-        IEnumerable<dynamic> TrendingItems(string city, int? month, int? year);
+        IEnumerable<TrendingItemsDTO> TrendingItems(string city, int? month, int? year);
     }
 }

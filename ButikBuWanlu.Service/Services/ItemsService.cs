@@ -1,9 +1,11 @@
 ﻿using ButikBuWanlu.Domain;
+using ButikBuWanlu.Domain.DTO;
 using ButikBuWanlu.Domain.Entities;
 using ButikBuWanlu.Service.DTO;
 using ButikBuWanlu.Service.IService;
 using LinqToDB;
 using LinqToDB.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -94,10 +96,27 @@ namespace ButikBuWanlu.Service.Services
             }
         }
 
-        public IEnumerable<dynamic> TrendingItems(string city, int? month, int? year)
+        public IEnumerable<TrendingItemsDTO> TrendingItems(string city, int? month, int? year)
         {
-            var x = unitofwork.TransactionsRepository.TrendingItems();
-            return x;
+            IEnumerable<TrendingItemsDTO> allitems = unitofwork.TransactionsRepository.TrendingItems();
+
+            if (string.IsNullOrEmpty(city) == false)
+                allitems = allitems.Where(x => x.City == city);
+
+            if (month == null)
+                month = DateTime.Now.Month;
+
+            if (year == null)
+                year = DateTime.Now.Year;
+
+            DateTime now = new DateTime(year.Value, month.Value, 1);
+            DateTime temp = now.AddMonths(-1);
+            DateTime prevMonth = new DateTime(temp.Year, temp.Month, DateTime.DaysInMonth(temp.Year, temp.Month));
+
+            allitems = allitems
+                .Where(x => (x.Month == month && x.Year == year) || (x.Month == prevMonth.Month && x.Year == prevMonth.Year));
+
+            return allitems.OrderByDescending(x => x.SummarySales).Take(5).ToList();
         }
     }
 }
