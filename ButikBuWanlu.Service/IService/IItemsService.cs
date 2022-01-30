@@ -1,6 +1,5 @@
 ﻿using ButikBuWanlu.Domain.DTO;
 using ButikBuWanlu.Domain.Entities;
-using ButikBuWanlu.Service.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

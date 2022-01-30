@@ -1,4 +1,4 @@
-﻿namespace ButikBuWanlu.Service.DTO
+﻿namespace ButikBuWanlu.Domain.DTO
 {
     public class BiggestSpenderDTO
     {

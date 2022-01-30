@@ -1,6 +1,6 @@
 ﻿using ButikBuWanlu.Domain;
+using ButikBuWanlu.Domain.DTO;
 using ButikBuWanlu.Domain.Entities;
-using ButikBuWanlu.Service.DTO;
 using ButikBuWanlu.Service.IService;
 using System.Collections.Generic;
 using System.Linq;
