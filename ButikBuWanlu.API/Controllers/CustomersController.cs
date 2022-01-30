@@ -45,10 +45,8 @@ namespace ButikBuWanlu.API.Controllers
 
             ////where validation
             if (string.IsNullOrEmpty(@params.Where) == false)
-            {
                 DynamicExpressionParser.ParseLambda<Customer, bool>(new ParsingConfig(), true, @params.Where);
                 items = items.Where(@params.Where);
-            };
 
 
             var paginationMetadata = new PaginationMetadata(items.Count(), @params.Page, @params.ItemsPerPage);
@@ -68,35 +66,8 @@ namespace ButikBuWanlu.API.Controllers
             [FromQuery] string city 
         )
         {
-            List<Customer> customers = new List<Customer>();
-
-            var allresult = customersService.GetAllAsync().Result.AsQueryable();
-
-            if (city != null)
-            {
-                var firstCustomer = allresult.Where(x => x.Store.City == city).OrderBy(x => x.DateRegister).FirstOrDefault();
-                customers.Add(firstCustomer);
-
-                var lastCustomer = allresult.Where(x => x.Store.City == city).OrderByDescending(x => x.DateRegister).FirstOrDefault();
-                customers.Add(lastCustomer);
-
-                return Ok(customers);
-            } else
-            {
-                var allCity = storesService.GetAllAsync().Result;
-
-                foreach (var item in allCity)
-                {
-                    var firstCustomer = allresult.Where(x => x.Store.City == item.City).OrderBy(x => x.DateRegister).FirstOrDefault();
-                    customers.Add(firstCustomer);
-
-                    var lastCustomer = allresult.Where(x => x.Store.City == item.City).OrderByDescending(x => x.DateRegister).FirstOrDefault();
-                    customers.Add(lastCustomer);
-                }
-
-                return Ok(customers);
-            }
-
+            var result = customersService.GetFirstAndLastCustomer(city);
+            return Ok(result);
         }
 
         [HttpGet]

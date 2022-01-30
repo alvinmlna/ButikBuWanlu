@@ -91,5 +91,38 @@ namespace ButikBuWanlu.Service.Services
                 return result;
             }
         }
+
+        public IEnumerable<Customer> GetFirstAndLastCustomer(string city)
+        {
+            var allresult = GetAllAsync().Result.AsQueryable();
+
+            List<Customer> customers = new List<Customer>();
+
+            if (city != null)
+            {
+                var firstCustomer = allresult.Where(x => x.Store.City == city).OrderBy(x => x.DateRegister).FirstOrDefault();
+                customers.Add(firstCustomer);
+
+                var lastCustomer = allresult.Where(x => x.Store.City == city).OrderByDescending(x => x.DateRegister).FirstOrDefault();
+                customers.Add(lastCustomer);
+
+                return customers;
+            }
+            else
+            {
+                var allCity = storesService.GetAllAsync().Result;
+
+                foreach (var item in allCity)
+                {
+                    var firstCustomer = allresult.Where(x => x.Store.City == item.City).OrderBy(x => x.DateRegister).FirstOrDefault();
+                    customers.Add(firstCustomer);
+
+                    var lastCustomer = allresult.Where(x => x.Store.City == item.City).OrderByDescending(x => x.DateRegister).FirstOrDefault();
+                    customers.Add(lastCustomer);
+                }
+
+                return customers;
+            }
+        }
     }
 }

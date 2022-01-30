@@ -11,5 +11,7 @@ namespace ButikBuWanlu.Service.IService
         Task<List<Customer>> GetAllAsync();
 
         IEnumerable<BiggestSpenderDTO> BiggestSpender(string city, int? month, int? year);
+
+        IEnumerable<Customer> GetFirstAndLastCustomer(string city);
     }
 }
