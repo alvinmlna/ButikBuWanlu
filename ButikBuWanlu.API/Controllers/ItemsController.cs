@@ -46,6 +46,14 @@ namespace ButikBuWanlu.API.Controllers
         }
 
         [HttpGet]
+        [Route("hiandlow")]
+        public IActionResult GetFirstAndLastCustomer()
+        {
+            var result = itemsService.HiAndLowPrice();
+            return Ok(result);
+        }
+
+        [HttpGet]
         [Route("popular")]
         public IActionResult PopularItems(
             [FromQuery] string city,
