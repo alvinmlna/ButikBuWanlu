@@ -164,8 +164,138 @@ Untuk menampilkan 10 data pelanggan yang paling besar belanjanya dalam 1 bulan d
 
 ##### How to achieve:
 
+- https://localhost:44308/api/Customers/biggestspender
 
-#### Result:
+
+<details>
+  <summary>Result</summary>
+
+  ```
+  [
+  {
+    "customerId": 16,
+    "customerName": "Customer 16",
+    "city": "Medan",
+    "totalPurchased": 58914000
+  },
+  {
+    "customerId": 30,
+    "customerName": "Customer 30",
+    "city": "Medan",
+    "totalPurchased": 58618000
+  },
+  {
+    "customerId": 10,
+    "customerName": "Customer 10",
+    "city": "Medan",
+    "totalPurchased": 54378000
+  },
+  {
+    "customerId": 46,
+    "customerName": "Customer 46",
+    "city": "Medan",
+    "totalPurchased": 53878000
+  },
+  {
+    "customerId": 12,
+    "customerName": "Customer 12",
+    "city": "Medan",
+    "totalPurchased": 53691000
+  },
+  {
+    "customerId": 19,
+    "customerName": "Customer 19",
+    "city": "Medan",
+    "totalPurchased": 51988000
+  },
+  {
+    "customerId": 13,
+    "customerName": "Customer 13",
+    "city": "Medan",
+    "totalPurchased": 51638000
+  },
+  {
+    "customerId": 41,
+    "customerName": "Customer 41",
+    "city": "Medan",
+    "totalPurchased": 51328000
+  },
+  {
+    "customerId": 20,
+    "customerName": "Customer 20",
+    "city": "Medan",
+    "totalPurchased": 51025000
+  },
+  {
+    "customerId": 6,
+    "customerName": "Customer 6",
+    "city": "Medan",
+    "totalPurchased": 50963000
+  },
+  {
+    "customerId": 21,
+    "customerName": "Customer 21",
+    "city": "Jakarta",
+    "totalPurchased": 70339000
+  },
+  {
+    "customerId": 1,
+    "customerName": "Customer 1",
+    "city": "Jakarta",
+    "totalPurchased": 61627000
+  },
+  {
+    "customerId": 3,
+    "customerName": "Customer 3",
+    "city": "Jakarta",
+    "totalPurchased": 59073000
+  },
+  {
+    "customerId": 15,
+    "customerName": "Customer 15",
+    "city": "Jakarta",
+    "totalPurchased": 59005000
+  },
+  {
+    "customerId": 32,
+    "customerName": "Customer 32",
+    "city": "Jakarta",
+    "totalPurchased": 58378000
+  },
+  {
+    "customerId": 2,
+    "customerName": "Customer 2",
+    "city": "Jakarta",
+    "totalPurchased": 55162000
+  },
+  {
+    "customerId": 8,
+    "customerName": "Customer 8",
+    "city": "Jakarta",
+    "totalPurchased": 49012000
+  },
+  {
+    "customerId": 28,
+    "customerName": "Customer 28",
+    "city": "Jakarta",
+    "totalPurchased": 48287000
+  },
+  {
+    "customerId": 38,
+    "customerName": "Customer 38",
+    "city": "Jakarta",
+    "totalPurchased": 48266000
+  },
+  {
+    "customerId": 43,
+    "customerName": "Customer 43",
+    "city": "Jakarta",
+    "totalPurchased": 45953000
+  }
+]
+
+  ```
+</details>
 
 
 ## Task 5
