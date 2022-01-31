@@ -150,5 +150,21 @@ namespace ButikBuWanlu.Service.Services
             return result;
         }
 
+        public ItemsDTO HiAndLowPrice()
+        {
+            IEnumerable<Item> items = GetAllAsync().Result;
+
+            ItemsDTO result = new ItemsDTO();
+
+            var LowestPrice = items.OrderBy(x => x.Price).FirstOrDefault();
+            result.ListData.Add(new _ItemsDTO { Id = LowestPrice.Id, Name = LowestPrice.Name, Price = LowestPrice.Price});
+
+            var HighestPrice = items.OrderByDescending(x => x.Price).FirstOrDefault();
+            result.ListData.Add(new _ItemsDTO { Id = HighestPrice.Id, Name = HighestPrice.Name, Price = HighestPrice.Price });
+
+            result.AllRecords = result.ListData.Count();
+
+            return result;
+        }
     }
 }

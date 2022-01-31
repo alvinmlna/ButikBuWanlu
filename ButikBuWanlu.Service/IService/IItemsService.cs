@@ -13,6 +13,7 @@ namespace ButikBuWanlu.Service.IService
         Task<List<Item>> GetAllAsync();
         ItemsDTO GetAllAsync(ItemsPaginationParameter parameter);
 
+        ItemsDTO HiAndLowPrice();
         IEnumerable<PopularItemsDTO> PopularItems(string city, int? month, int? year);
         IEnumerable<TrendingItemsDTO> TrendingItems(string city, int? month, int? year);
     }

@@ -4,6 +4,11 @@ namespace ButikBuWanlu.Domain.DTO.Main
 {
     public class ItemsDTO
     {
+        public ItemsDTO()
+        {
+            ListData = new List<_ItemsDTO>();
+        }
+
         public int AllRecords { get; set; }
         public List<_ItemsDTO> ListData { get; set; }
     }
