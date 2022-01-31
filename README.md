@@ -303,8 +303,27 @@ Untuk menampilkan data total penjualan setiap cabang dalam 1 tahun.
 
 ##### How to achieve:
 
+- https://localhost:44308/api/Transactions/summarytransaction?year=2021
 
-#### Result:
+<details>
+  <summary>Result</summary>
+
+  ```
+  [
+  {
+    "storeId": 1,
+    "city": "Medan",
+    "totalPurchased": 1160367000
+  },
+  {
+    "storeId": 2,
+    "city": "Jakarta",
+    "totalPurchased": 905032000
+  }
+]
+
+  ```
+</details>
 
 
 ## Task 6
@@ -312,8 +331,60 @@ Untuk menampilkan 5 data pakaian yang mengalami peningkatan tertinggi penjualan 
 
 ##### How to achieve:
 
-- https://localhost:44308/api/Items/hiandlow
+- https://localhost:44308/api/Items/trending?month=01&year=2022
 
-#### Result:
+<details>
+  <summary>Result</summary>
+
+  ```
+[
+  {
+    "itemId": 16,
+    "year": 2022,
+    "month": 1,
+    "itemName": "Item 16",
+    "totalSales": 8844000,
+    "previousSales": 2412000,
+    "summarySales": 6432000
+  },
+  {
+    "itemId": 27,
+    "year": 2022,
+    "month": 1,
+    "itemName": "Item 27",
+    "totalSales": 7650000,
+    "previousSales": 1224000,
+    "summarySales": 6426000
+  },
+  {
+    "itemId": 25,
+    "year": 2022,
+    "month": 1,
+    "itemName": "Item 25",
+    "totalSales": 8190000,
+    "previousSales": 2808000,
+    "summarySales": 5382000
+  },
+  {
+    "itemId": 21,
+    "year": 2022,
+    "month": 1,
+    "itemName": "Item 21",
+    "totalSales": 7992000,
+    "previousSales": 2664000,
+    "summarySales": 5328000
+  },
+  {
+    "itemId": 28,
+    "year": 2021,
+    "month": 12,
+    "itemName": "Item 28",
+    "totalSales": 6831000,
+    "previousSales": 2376000,
+    "summarySales": 4455000
+  }
+]
+  ```
+</details>
 
 
